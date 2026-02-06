@@ -161,3 +161,14 @@ Anti-patterns to Avoid
 ❌ `std::vector` for fixed-size data (use `std::array`)
 ❌ `std::string` for temporary views (use `std::string_view`)
 ❌ Locks in critical sections (use lock-free atomics)
+
+## Real time audio 
+
+- Lock-free ring buffers - Essential for thread communication
+- SIMD - 4-8x speedup for basic operations
+- No allocations in audio callback - Pre-allocate everything
+- Atomic parameters - Thread-safe without locks
+- Stack allocation - std::array over std::vector in hot paths
+- Cache alignment - alignas(64) for atomic variables
+- Pre-computed coefficients - Do math once, not per sample
+- Vectorize everything - Gains, filters, mixing all benefit from SIMD
